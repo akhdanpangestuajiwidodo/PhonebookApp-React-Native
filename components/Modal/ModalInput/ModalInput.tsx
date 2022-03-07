@@ -1,7 +1,15 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line prettier/prettier
 import React from 'react';
-import {Text, View, StyleSheet, Pressable, Modal, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  Modal,
+  Alert,
+  TextInput,
+} from 'react-native';
 interface ModalState {
   modalVisible: boolean;
   setModalVisible: Function;
@@ -18,11 +26,28 @@ const ModalInput = (props: ModalState) => {
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Hello World!</Text>
+          <Text style={styles.modalText}>Input Data Contact</Text>
+          <View>
+            <TextInput
+              style={styles.searchInput}
+              value={'Name'}
+              multiline={false}
+            />
+          </View>
+          <View>
+            <TextInput
+              style={styles.searchInput}
+              value={'081xxxx'}
+              multiline={false}
+            />
+          </View>
+          <Pressable style={[styles.button, styles.buttonSave]}>
+            <Text style={styles.textStyle}>Save</Text>
+          </Pressable>
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => props.setModalVisible(!props.modalVisible)}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
+            <Text style={styles.textStyle}>Close</Text>
           </Pressable>
         </View>
       </View>
@@ -31,30 +56,15 @@ const ModalInput = (props: ModalState) => {
 };
 
 const styles = StyleSheet.create({
-  buttonAdd: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    elevation: 3,
-    backgroundColor: '#017BFF',
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
-  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    marginTop: 0,
   },
   modalView: {
-    margin: 20,
+    // width: 500,
+    margin: 100,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
@@ -69,15 +79,21 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
     elevation: 2,
+    width: 200,
+    marginBottom: 12,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: 'red',
+  },
+  buttonSave: {
+    backgroundColor: 'green',
   },
   textStyle: {
     color: 'white',
@@ -87,6 +103,18 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  searchInput: {
+    width: 200,
+    fontSize: 12,
+    borderWidth: 0,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+    backgroundColor: '#FAFAFA',
+    color: '#787878',
+    fontWeight: '600',
+    marginBottom: 12,
   },
 });
 
