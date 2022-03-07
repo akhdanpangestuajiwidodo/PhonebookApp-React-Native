@@ -9,27 +9,13 @@
  */
 
 import React from 'react';
-import {Button, Text, View} from 'react-native';
+import {View} from 'react-native';
+import HeaderComponent from './components/Header/Header';
 
 const App = () => {
   return (
     <View>
-      <View>
-        {/* Header */}
-        <Text>Phone Book App</Text>
-        <View>
-          <View>
-            <Text>Contact</Text>
-          </View>
-          <View>
-            <Button title="Add Contact" />
-          </View>
-        </View>
-        {/* End Header */}
-        {/* Segment Search */}
-        <View></View>
-        {/* End Segment Search */}
-      </View>
+      <HeaderComponent />
     </View>
   );
 };
