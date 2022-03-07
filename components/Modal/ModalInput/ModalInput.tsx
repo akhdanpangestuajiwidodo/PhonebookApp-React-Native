@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line prettier/prettier
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -10,11 +10,24 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
+
 interface ModalState {
   modalVisible: boolean;
   setModalVisible: Function;
 }
+
+let sub: {[key: string]: any} = {
+  name: null,
+  phoneNumber: null,
+  avatarImage: null,
+};
 const ModalInput = (props: ModalState) => {
+  const [formData, setFormData] = useState(sub);
+  function handleChange(event: any) {
+    let data = {...formData};
+    data[event.target.name] = event.target.value;
+    setFormData(data);
+  }
   return (
     <Modal
       animationType="slide"
@@ -30,15 +43,19 @@ const ModalInput = (props: ModalState) => {
           <View>
             <TextInput
               style={styles.searchInput}
-              value={'Name'}
+              value={formData.name}
               multiline={false}
+              onChange={handleChange}
+              placeholder={'Name'}
             />
           </View>
           <View>
             <TextInput
               style={styles.searchInput}
-              value={'081xxxx'}
+              value={formData.phoneNumber}
               multiline={false}
+              onChange={handleChange}
+              placeholder={'08xxxxx'}
             />
           </View>
           <Pressable style={[styles.button, styles.buttonSave]}>
