@@ -1,23 +1,32 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {Text, View, StyleSheet, Pressable} from 'react-native';
-import ModalInput from '../../Modal/ModalInput/ModalInput';
-const AddButton = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+// eslint-disable-next-line prettier/prettier
+import React from 'react';
+import {Text, View, StyleSheet, Pressable, Modal, Alert} from 'react-native';
+interface ModalState {
+  modalVisible: boolean;
+  setModalVisible: Function;
+}
+const ModalInput = (props: ModalState) => {
   return (
-    <View>
-      <ModalInput
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-      {
-        <Pressable
-          style={styles.buttonAdd}
-          onPress={() => setModalVisible(true)}>
-          <Text style={styles.text}>+</Text>
-        </Pressable>
-      }
-    </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={props.modalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+        props.setModalVisible(!props.modalVisible);
+      }}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Hello World!</Text>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => props.setModalVisible(!props.modalVisible)}>
+            <Text style={styles.textStyle}>Hide Modal</Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -81,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddButton;
+export default ModalInput;
