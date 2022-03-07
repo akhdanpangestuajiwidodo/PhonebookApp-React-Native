@@ -11,11 +11,13 @@
 import React from 'react';
 import {View} from 'react-native';
 import HeaderComponent from './components/Header/Header';
+import ListContact from './components/ListContact/ListContact';
 
 const App = () => {
   return (
     <View>
       <HeaderComponent />
+      <ListContact />
     </View>
   );
 };
