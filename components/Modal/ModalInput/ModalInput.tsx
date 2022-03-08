@@ -9,10 +9,9 @@ import {
   Modal,
   TextInput,
   Alert,
-  AsyncStorage,
 } from 'react-native';
 
-// import AsynStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ModalState {
   modalVisible: boolean;
@@ -53,17 +52,18 @@ const ModalInput = (props: ModalState) => {
     Alert.alert('Data has been saved');
   };
 
-  // //getData
-  // const getData = async () => {
-  //   AsyncStorage.getAllKeys((err, keys) => {
-  //     AsyncStorage.multiGet(keys, (error, stores) => {
-  //       stores.map((result, i, store) => {
-  //         console.log('Dataku', {[store[i][0]]: store[i][1]});
-  //         return true;
-  //       });
-  //     });
-  //   });
-  // };
+  //getData
+  const getData = async () => {
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (error, stores) => {
+        console.log('Jumlah data', stores?.length);
+        stores.map((result, i, store) => {
+          console.log('Dataku', {[store[i][0]]: store[i][1]});
+          return true;
+        });
+      });
+    });
+  };
 
   //Function close modal
   const closeModal = () => {
@@ -117,11 +117,11 @@ const ModalInput = (props: ModalState) => {
             onPress={closeModal}>
             <Text style={styles.textStyle}>Close</Text>
           </Pressable>
-          {/* <Pressable
+          <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => getData()}>
             <Text style={styles.textStyle}>Cek</Text>
-          </Pressable> */}
+          </Pressable>
         </View>
       </View>
     </Modal>
