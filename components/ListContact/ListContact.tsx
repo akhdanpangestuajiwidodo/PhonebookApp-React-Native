@@ -1,30 +1,68 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  AsyncStorage,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+type formDataItem = {
+  name: string;
+  phoneNumber: string;
+  avatarImage: string;
+};
+
 const ListContact = () => {
+  const result: formDataItem[] = [];
+  //Hooks Contacts
+  const [contacts, setContact] = useState(result);
+
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contacts]);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@contacts');
+      if (value !== null) {
+        setContact(JSON.parse(value));
+        console.log('Data Storage', contacts);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
   return (
-    <View style={style.parentListContainer}>
-      <View>
-        <View style={style.leftSideList}>
-          <Image
-            source={require('../../image/user.jpg')}
-            style={style.imageContactList}
-          />
+    <>
+      {contacts.map(contact => (
+        <View style={style.parentListContainer}>
           <View>
-            <Text style={style.nameContact}>Nama</Text>
-            <Text style={style.nomorContact}>081xxx</Text>
+            <View style={style.leftSideList}>
+              <Image
+                source={require('../../image/user.jpg')}
+                style={style.imageContactList}
+              />
+              <View>
+                <Text style={style.nameContact}>{contact.name}</Text>
+                <Text style={style.nomorContact}>{contact.phoneNumber}</Text>
+              </View>
+            </View>
+          </View>
+          <View>
+            <Pressable style={style.buttonDelete}>
+              <Image
+                source={require('../../image/delete.png')}
+                style={style.imageDelete}
+              />
+            </Pressable>
           </View>
         </View>
-      </View>
-      <View>
-        <Pressable style={style.buttonDelete}>
-          <Image
-            source={require('../../image/delete.png')}
-            style={style.imageDelete}
-          />
-        </Pressable>
-      </View>
-    </View>
+      ))}
+    </>
   );
 };
 

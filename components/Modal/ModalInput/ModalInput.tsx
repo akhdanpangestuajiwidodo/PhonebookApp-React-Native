@@ -9,19 +9,15 @@ import {
   Modal,
   Alert,
   TextInput,
+  AsyncStorage,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// import AsynStorage from '@react-native-async-storage/async-storage';
 
 interface ModalState {
   modalVisible: boolean;
   setModalVisible: Function;
 }
-
-let sub: {[key: string]: any} = {
-  name: null,
-  phoneNumber: null,
-  avatarImage: null,
-};
 
 type formDataItem = {
   name: string;
@@ -32,37 +28,41 @@ const ModalInput = (props: ModalState) => {
   const result: formDataItem[] = [];
   //Hooks Contacts
   const [contacts, setContact] = useState(result);
-  //Hooks form data
-  const [formData, setFormData] = useState(sub);
 
-  //Hooks test
-  const [testText, setTestText] = useState(1);
+  //Hooks Name
+  const [name, setName] = useState('');
 
-  //Handle change value form input
-  function handleChange(event: any) {
-    let data = {...formData};
-    data[event.target.name] = event.target.value;
-    setFormData(data);
-  }
+  //Hooks Phonebook
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   //Save Data to local
   const storeData = async () => {
-    try {
-      let data = [...contacts];
-      data.push({
-        name: formData.name,
-        phoneNumber: formData.phoneNumber,
-        avatarImage: '../../image/user.jpg',
-      });
-      setContact(data);
-      setFormData({name: '', phoneNumber: ''});
-      const jsonValue = JSON.stringify(data);
-      await AsyncStorage.setItem('contacts', jsonValue);
-      props.setModalVisible(!props.modalVisible);
-    } catch (e) {
-      // saving error
-    }
+    let data = [...contacts];
+    data.push({
+      name: name,
+      phoneNumber: phoneNumber,
+      avatarImage: '../../image/user.jpg',
+    });
+    console.log(data, contacts.length);
+    setContact(data);
+    setName('');
+    setPhoneNumber('');
+    const jsonValue = JSON.stringify(data);
+    AsyncStorage.setItem('@contacts', jsonValue);
+    props.setModalVisible(!props.modalVisible);
   };
+
+  // //getData
+  // const getData = async () => {
+  //   AsyncStorage.getAllKeys((err, keys) => {
+  //     AsyncStorage.multiGet(keys, (error, stores) => {
+  //       stores.map((result, i, store) => {
+  //         console.log('Dataku', {[store[i][0]]: store[i][1]});
+  //         return true;
+  //       });
+  //     });
+  //   });
+  // };
 
   return (
     <Modal
@@ -75,28 +75,28 @@ const ModalInput = (props: ModalState) => {
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Input Data Contact {testText}</Text>
+          <Text style={styles.modalText}>Input Data Contact</Text>
           <View>
             <TextInput
               style={styles.searchInput}
-              value={formData.name}
+              value={name}
               multiline={false}
-              onChange={handleChange}
+              onChangeText={textName => setName(textName)}
               placeholder={'Name'}
             />
           </View>
           <View>
             <TextInput
               style={styles.searchInput}
-              value={formData.phoneNumber}
+              value={phoneNumber}
               multiline={false}
-              onChange={handleChange}
+              onChangeText={textPhoneNumber => setPhoneNumber(textPhoneNumber)}
               placeholder={'08xxxxx'}
             />
           </View>
           <Pressable
             style={[styles.button, styles.buttonSave]}
-            onPress={() => storeData}>
+            onPress={() => storeData()}>
             <Text style={styles.textStyle}>Save</Text>
           </Pressable>
           <Pressable
@@ -104,6 +104,11 @@ const ModalInput = (props: ModalState) => {
             onPress={() => props.setModalVisible(!props.modalVisible)}>
             <Text style={styles.textStyle}>Close</Text>
           </Pressable>
+          {/* <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => getData()}>
+            <Text style={styles.textStyle}>Cek</Text>
+          </Pressable> */}
         </View>
       </View>
     </Modal>
@@ -118,7 +123,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   modalView: {
-    // width: 500,
     margin: 100,
     backgroundColor: 'white',
     borderRadius: 20,
