@@ -64,15 +64,18 @@ const ModalInput = (props: ModalState) => {
   //   });
   // };
 
+  //Function close modal
+  const closeModal = () => {
+    Alert.alert('Modal has been closed.');
+    props.setModalVisible(!props.modalVisible);
+  };
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={props.modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        props.setModalVisible(!props.modalVisible);
-      }}>
+      onRequestClose={closeModal}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Input Data Contact</Text>
