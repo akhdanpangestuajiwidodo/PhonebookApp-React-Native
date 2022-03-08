@@ -7,8 +7,8 @@ import {
   StyleSheet,
   Pressable,
   Modal,
-  Alert,
   TextInput,
+  Alert,
   AsyncStorage,
 } from 'react-native';
 
@@ -49,7 +49,8 @@ const ModalInput = (props: ModalState) => {
     setPhoneNumber('');
     const jsonValue = JSON.stringify(data);
     AsyncStorage.setItem('@contacts', jsonValue);
-    props.setModalVisible(!props.modalVisible);
+    closeModal();
+    Alert.alert('Data has been saved');
   };
 
   // //getData
@@ -66,7 +67,6 @@ const ModalInput = (props: ModalState) => {
 
   //Function close modal
   const closeModal = () => {
-    Alert.alert('Modal has been closed.');
     props.setModalVisible(!props.modalVisible);
   };
 
