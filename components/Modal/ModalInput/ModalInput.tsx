@@ -70,6 +70,16 @@ const ModalInput = (props: ModalState) => {
     props.setModalVisible(!props.modalVisible);
   };
 
+  //Function setName
+  const changeNameInput = (text: string) => {
+    setName(text);
+  };
+
+  //Function setPhoneNumber
+  const changePhoneNumberInput = (text: string) => {
+    setPhoneNumber(text);
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -84,7 +94,7 @@ const ModalInput = (props: ModalState) => {
               style={styles.searchInput}
               value={name}
               multiline={false}
-              onChangeText={textName => setName(textName)}
+              onChangeText={changeNameInput}
               placeholder={'Name'}
             />
           </View>
@@ -93,18 +103,18 @@ const ModalInput = (props: ModalState) => {
               style={styles.searchInput}
               value={phoneNumber}
               multiline={false}
-              onChangeText={textPhoneNumber => setPhoneNumber(textPhoneNumber)}
+              onChangeText={changePhoneNumberInput}
               placeholder={'08xxxxx'}
             />
           </View>
           <Pressable
             style={[styles.button, styles.buttonSave]}
-            onPress={() => storeData()}>
+            onPress={storeData}>
             <Text style={styles.textStyle}>Save</Text>
           </Pressable>
           <Pressable
             style={[styles.button, styles.buttonClose]}
-            onPress={() => props.setModalVisible(!props.modalVisible)}>
+            onPress={closeModal}>
             <Text style={styles.textStyle}>Close</Text>
           </Pressable>
           {/* <Pressable
