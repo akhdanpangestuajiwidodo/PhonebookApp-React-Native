@@ -4,6 +4,12 @@ import {Text, View, StyleSheet, Pressable} from 'react-native';
 import ModalInput from '../../Modal/ModalInput/ModalInput';
 const AddButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  //Function show modal
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
   return (
     <View>
       <ModalInput
@@ -11,9 +17,7 @@ const AddButton = () => {
         setModalVisible={setModalVisible}
       />
       {
-        <Pressable
-          style={styles.buttonAdd}
-          onPress={() => setModalVisible(true)}>
+        <Pressable style={styles.buttonAdd} onPress={showModal}>
           <Text style={styles.text}>+</Text>
         </Pressable>
       }
